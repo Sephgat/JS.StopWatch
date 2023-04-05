@@ -63,16 +63,27 @@ function incrementTimer() {
     // calculate the number of minutes and seconds by
     // minutes = the integer portion of (timerTime / 60)
     // seconds = the remainder when dividing timerTime by 60
+    elapsedTime++;
 
+    let minutes = Math.floor(elapsedTime/60);
+    let secundsd = elapsedTime % 60;
     // call the function pad to make sure there's a leading 0 on minutes if necessary
     // call the function pad to make sure there's a leading 0 on seconds if necessary
     // write minutes to the element on the page
     // write second to the element on the page
+    document.getElementById("minutes").innerHTML = pad(minutes);
+    document.getElementById("seconds").innerHTML = pad(secundsd);
+
 }
 
 function pad(number) {
     // add a leading 0 to number if the number is < 10
+    if(number < 10){
+        number = "0" + number;
+
+    }
     // return number
+    return number;
 }
 
 function stopTimer() {
@@ -94,6 +105,10 @@ function resetTimer() {
     // stop the timer by calling stopTimer
     // set the timerTime back to 0
     // write 00 to the elements on the page for minutes and seconds
+    stopTimer();
+    elapsedTime = 0;
+    document.getElementById("minutes").innerHTML = "00";
+    document.getElementById("seconds").innerHTML = "00"
 }
 
 // When the page has finished loading, call the function init
