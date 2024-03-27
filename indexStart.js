@@ -23,114 +23,139 @@
 */
 
 
-let isRunning = false;
-let timer = null;
-let elapsedTime = 0; 
+class Timer{
+    constructor(){
+    this.isRunning = false;
+    this.timer = null;
+    this.elapsedTime = 0; 
+
+    this.createTimer = this.createTimer.bind(this);
+    this.incrementTimer = this.incrementTimer.bind(this);
+    this.startTimer = this.startTimer.bind(this);
+    this.foobar = this.foobar.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
+    this.pad = this.pad.bind(this)
+    document.getElementById("addtimer").onclick = this.createTimer.bind(this)
+    }
+    createTimer(){
+        document.getElementById("timer").innerHTML = this.generateHTML()
+        this.addEventHandlers()
+    }
+    generateHTML(){
+        return   ` <div class="h1 p-5 mt-4 text-center bg-light rounded">
+        <span id="minutes">00</span> : <span id="seconds">00</span>: <span id="miliseconds">00</span>
+      </div>
+  
+      <!-- timer buttons -->
+      <div class="container text-center">
+          <button class="btn btn-lg btn-success" id="start">
+            Start
+          </button>
+          <button class="btn btn-lg btn-danger" id="stop">
+            Stop
+          </button>
+        </div>
+        <div class="container text-center">
+          <button class="btn btn-link btn-block" id="reset">
+            Reset
+          </button>
+        </div>
+      </div> `
+    }
+
+    addEventHandlers()
+    {
+        // Put the element on the page with an id of start in a variable
+        // Do the same for the stop button and the reset button
+        const startBtn = document.getElementById("start");
+        const stopBtn = document.getElementById("stop");
+        const resetBtn = document.getElementById("reset");
+
+        // Add an onclick handler to each of the buttons
+        // The functions startTimer, stopTimer and resetTimer should fire when one of the buttons is clicked
+        startBtn.onclick = this.startTimer.bind(this);
+        stopBtn.onclick = this.stopTimer.bind(this);
+        resetBtn.onclick = this.resetTimer.bind(this);
+    }
 
 
+    startTimer() {
+        
+        if(this.isRunning == false){
+            this.isRunning = true;
+            this.timer = setInterval(this.foobar, 10);
 
-function init()
-{
-    // Put the element on the page with an id of start in a variable
-    // Do the same for the stop button and the reset button
+        }
+    }
+    foobar() {
+        if(this.isRunning){
+        const [minutes, seconds, milliseconds] = this.incrementTimer();
+        this.renderTimer(minutes, seconds, milliseconds);
+        }
+    }
 
-    const startBtn = document.getElementById("start");
-    const stopBtn = document.getElementById("stop");
-    const resetBtn = document.getElementById("reset");
+    incrementTimer() {
+        // Increment the elapsedTime
+        this.elapsedTime++;
+        
+        // Calculate minutes, seconds, and milliseconds
+        this.minutes = Math.floor(this.elapsedTime / 6000);
+        this.seconds = Math.floor(this.elapsedTime / 100) % 60;
+        this.milliseconds = this.elapsedTime % 100;
 
-    // Add an onclick handler to each of the buttons
-    // The functions startTimer, stopTimer and resetTimer should fire when one of the buttons is clicked
-    startBtn.onclick = startTimer;
-    stopBtn.onclick = stopTimer;
-    resetBtn.onclick = resetTimer;
-}
+        return [this.minutes, this.seconds, this.milliseconds];
+    }
 
 
-function startTimer() {
-    // if the timer is NOT running, start it by
-        // set the isRunning variable to true
-        // call the function setTimer to call the function incrementTimer every second
-        // save the timer in a the timer variable so you can stop the timer later on
-    //end if
-    if(isRunning == false){
-        isRunning = true;
-        timer = setInterval(foobar, 10);
+    renderTimer(minutes, seconds, miliseconds){
+        //show the value of both on the webpage
+        //this one being minutes
+        document.getElementById("minutes").innerHTML = this.pad(minutes);
+        //this one being seconds
+        document.getElementById("seconds").innerHTML = this.pad(seconds);
+
+        document.getElementById("miliseconds").innerHTML = this.pad(miliseconds);
 
     }
-}
-function foobar(){
-    
-    let [minutes,seconds, milisecounds] = incrementTimer();
-    //
-    renderTimer(minutes, seconds, milisecounds);
-
-}
-
-function incrementTimer() {
-    // increment the elapsedTime
-    elapsedTime++;
-    // calculate the number of minutes and seconds by
-    // minutes = the integer portion of (timerTime / 60)
-    let minutes = Math.floor(elapsedTime/6000);
-    // seconds = the remainder when dividing timerTime by 60
-    let seconds = Math.floor(elapsedTime/100) % 60;
-    //take the minutes and the seconds and send them into showTime
-
-
-
-    let milisecounds = elapsedTime % 100
-
-    return [minutes,seconds, milisecounds];
-}
-
-
-function renderTimer(minutes, seconds, miliseconds){
-    //show the value of both on the webpage
-    //this one being minutes
-    document.getElementById("minutes").innerHTML = pad(minutes);
-    //this one being seconds
-    document.getElementById("seconds").innerHTML = pad(seconds);
-
-    document.getElementById("miliseconds").innerHTML = pad(miliseconds);
-
-}
 
 
 
 
-function pad(number) {
-    // add a leading 0 to number if the number is < 10
-    if(number < 10){
-        number = "0" + number;
+    pad(number) {
+        // add a leading 0 to number if the number is < 10
+        if(number < 10){
+            number = "0" + number;
 
+        }
+        // return number
+        return number;
     }
-    // return number
-    return number;
-}
 
-function stopTimer() {
-    // if the timer is running, stop it by
-        // set isRunning to false
-        // call the function clearInterval to stop the timer
-    // end if
-    if (isRunning){
-        // set isRunning to false
-        isRunning = false;
-        clearInterval(timer);
+    stopTimer() {
+        // if the timer is running, stop it by
+            // set isRunning to false
+            // call the function clearInterval to stop the timer
+        // end if
+        if (this.isRunning){
+            // set isRunning to false
+            this.isRunning = false;
+            clearInterval(this.timer);
+        }
+        
     }
-    
-}
 
-function resetTimer() {
-    // stop the timer by calling stopTimer
-    stopTimer();
-       // set the timerTime back to 0
-    elapsedTime = 0;
-    // write 00 to the elements on the page for minutes and seconds
-    document.getElementById("minutes").innerHTML = "00"
-    document.getElementById("seconds").innerHTML = "00"
-    document.getElementById("miliseconds").innerHTML = "00"
+    resetTimer() {
+        // stop the timer by calling stopTimer
+        this.stopTimer();
+        // set the timerTime back to 0
+        this.elapsedTime = 0;
+        // write 00 to the elements on the page for minutes and seconds
+        document.getElementById("minutes").innerHTML = "00"
+        document.getElementById("seconds").innerHTML = "00"
+        document.getElementById("miliseconds").innerHTML = "00"
+    }
 }
 
 // When the page has finished loading, call the function init
-window.onload = init;
+window.onload = () => {new Timer };
