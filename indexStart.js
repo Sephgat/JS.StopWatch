@@ -21,6 +21,8 @@
     Create 3 global variables, isRunning, timer and elapsedTime.
     Initialize them to false, null and 0 respectively.
 */
+
+
 let isRunning = false;
 let timer = null;
 let elapsedTime = 0; 
@@ -45,7 +47,6 @@ function init()
 
 
 function startTimer() {
-    console.log("im in start");
     // if the timer is NOT running, start it by
         // set the isRunning variable to true
         // call the function setTimer to call the function incrementTimer every second
@@ -53,28 +54,49 @@ function startTimer() {
     //end if
     if(isRunning == false){
         isRunning = true;
-        timer = setInterval(incrementTimer, 1000);
+        timer = setInterval(foobar, 10);
+
     }
+}
+function foobar(){
+    
+    let [minutes,seconds, milisecounds] = incrementTimer();
+    //
+    renderTimer(minutes, seconds, milisecounds);
+
 }
 
 function incrementTimer() {
-    console.log("incrument")
     // increment the elapsedTime
+    elapsedTime++;
     // calculate the number of minutes and seconds by
     // minutes = the integer portion of (timerTime / 60)
+    let minutes = Math.floor(elapsedTime/6000);
     // seconds = the remainder when dividing timerTime by 60
-    elapsedTime++;
+    let seconds = Math.floor(elapsedTime/100) % 60;
+    //take the minutes and the seconds and send them into showTime
 
-    let minutes = Math.floor(elapsedTime/60);
-    let secundsd = elapsedTime % 60;
-    // call the function pad to make sure there's a leading 0 on minutes if necessary
-    // call the function pad to make sure there's a leading 0 on seconds if necessary
-    // write minutes to the element on the page
-    // write second to the element on the page
+
+
+    let milisecounds = elapsedTime % 100
+
+    return [minutes,seconds, milisecounds];
+}
+
+
+function renderTimer(minutes, seconds, miliseconds){
+    //show the value of both on the webpage
+    //this one being minutes
     document.getElementById("minutes").innerHTML = pad(minutes);
-    document.getElementById("seconds").innerHTML = pad(secundsd);
+    //this one being seconds
+    document.getElementById("seconds").innerHTML = pad(seconds);
+
+    document.getElementById("miliseconds").innerHTML = pad(miliseconds);
 
 }
+
+
+
 
 function pad(number) {
     // add a leading 0 to number if the number is < 10
@@ -87,12 +109,12 @@ function pad(number) {
 }
 
 function stopTimer() {
-    console.log("stop");
     // if the timer is running, stop it by
         // set isRunning to false
         // call the function clearInterval to stop the timer
     // end if
     if (isRunning){
+        // set isRunning to false
         isRunning = false;
         clearInterval(timer);
     }
@@ -100,15 +122,14 @@ function stopTimer() {
 }
 
 function resetTimer() {
-    console.log("reset");
-
     // stop the timer by calling stopTimer
-    // set the timerTime back to 0
-    // write 00 to the elements on the page for minutes and seconds
     stopTimer();
+       // set the timerTime back to 0
     elapsedTime = 0;
-    document.getElementById("minutes").innerHTML = "00";
+    // write 00 to the elements on the page for minutes and seconds
+    document.getElementById("minutes").innerHTML = "00"
     document.getElementById("seconds").innerHTML = "00"
+    document.getElementById("miliseconds").innerHTML = "00"
 }
 
 // When the page has finished loading, call the function init
