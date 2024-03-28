@@ -26,17 +26,20 @@
 class Timer{
     constructor(){
     this.isRunning = false;
+    this.isIncementing = false;
+    this.isDecrementing = false;
     this.timer = null;
     this.elapsedTime = 0; 
 
     this.createTimer = this.createTimer.bind(this);
     this.incrementTimer = this.incrementTimer.bind(this);
     this.startTimer = this.startTimer.bind(this);
-    this.foobar = this.foobar.bind(this);
+    this.decrementTimer = this.decrementTimer.bind(this);
+    this.updateTimer = this.updateTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
     this.pad = this.pad.bind(this)
-    document.getElementById("addtimer").onclick = this.createTimer.bind(this)
+    document.getElementById("addtimer").onclick = this.createTimer.bind(this);
     }
     createTimer(){
         document.getElementById("timer").innerHTML = this.generateHTML()
@@ -60,6 +63,9 @@ class Timer{
           <button class="btn btn-link btn-block" id="reset">
             Reset
           </button>
+          <button class="btn btn-lg btn-success" id="decrement">
+            Count down
+          </button>
         </div>
       </div> `
     }
@@ -71,12 +77,14 @@ class Timer{
         const startBtn = document.getElementById("start");
         const stopBtn = document.getElementById("stop");
         const resetBtn = document.getElementById("reset");
+        const decrementBtn = document.getElementById("decrement");
 
         // Add an onclick handler to each of the buttons
         // The functions startTimer, stopTimer and resetTimer should fire when one of the buttons is clicked
         startBtn.onclick = this.startTimer.bind(this);
         stopBtn.onclick = this.stopTimer.bind(this);
         resetBtn.onclick = this.resetTimer.bind(this);
+        decrementBtn.onclick = this.decreaseTimer.bind(this);
     }
 
 
@@ -84,20 +92,47 @@ class Timer{
         
         if(this.isRunning == false){
             this.isRunning = true;
-            this.timer = setInterval(this.foobar, 10);
+            this.isIncementing = true;
+            this.timer = setInterval(this.updateTimer, 10);
 
         }
     }
-    foobar() {
-        if(this.isRunning){
+    decreaseTimer(){
+        if(this.isRunning == false){
+            this.isRunning = true;
+            this.isDecrementing = true;
+            this.timer = setInterval(this.updateTimer, 10);
+
+        }
+    }
+    updateTimer() {
+        if(this.isRunning && this.isIncementing){
         const [minutes, seconds, milliseconds] = this.incrementTimer();
         this.renderTimer(minutes, seconds, milliseconds);
         }
+        else if (this.isRunning && this.isDecrementing){
+            const [minutes, seconds, milliseconds] = this.decrementTimer();
+        this.renderTimer(minutes, seconds, milliseconds);
+        } 
     }
 
     incrementTimer() {
         // Increment the elapsedTime
         this.elapsedTime++;
+        
+        // Calculate minutes, seconds, and milliseconds
+        this.minutes = Math.floor(this.elapsedTime / 6000);
+        this.seconds = Math.floor(this.elapsedTime / 100) % 60;
+        this.milliseconds = this.elapsedTime % 100;
+
+        return [this.minutes, this.seconds, this.milliseconds];
+    }
+    decrementTimer() {
+        // decrement the elapsedTime
+        this.elapsedTime--;
+        if(this.elapsedTime == 0 ){
+            this.stopTimer()
+        }
         
         // Calculate minutes, seconds, and milliseconds
         this.minutes = Math.floor(this.elapsedTime / 6000);
@@ -114,7 +149,7 @@ class Timer{
         document.getElementById("minutes").innerHTML = this.pad(minutes);
         //this one being seconds
         document.getElementById("seconds").innerHTML = this.pad(seconds);
-
+        //this one for miliseconds
         document.getElementById("miliseconds").innerHTML = this.pad(miliseconds);
 
     }
@@ -140,6 +175,8 @@ class Timer{
         if (this.isRunning){
             // set isRunning to false
             this.isRunning = false;
+            this.isIncementing = false;
+            this.isDecrementing = false;
             clearInterval(this.timer);
         }
         
