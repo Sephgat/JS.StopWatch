@@ -23,82 +23,87 @@
 */
 
 
-class Timer{
-    constructor(){
-    this.isRunning = false;
-    this.isIncementing = false;
-    this.isDecrementing = false;
-    this.timer = null;
-    this.elapsedTime = 0; 
+class Timer {
+    constructor() {
+        this.isRunning = false;
+        this.isIncementing = false;
+        this.isDecrementing = false;
+        this.timer = null;
+        this.elapsedTime = 0;
 
-    this.createTimer = this.createTimer.bind(this);
-    this.incrementTimer = this.incrementTimer.bind(this);
-    this.startTimer = this.startTimer.bind(this);
-    this.decrementTimer = this.decrementTimer.bind(this);
-    this.updateTimer = this.updateTimer.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
-    this.resetTimer = this.resetTimer.bind(this);
-    this.pad = this.pad.bind(this)
-    document.getElementById("addtimer").onclick = this.createTimer.bind(this);
+        this.createTimer = this.createTimer.bind(this);
+        this.incrementTimer = this.incrementTimer.bind(this);
+        this.startTimer = this.startTimer.bind(this);
+        this.decrementTimer = this.decrementTimer.bind(this);
+        this.updateTimer = this.updateTimer.bind(this);
+        this.stopTimer = this.stopTimer.bind(this);
+        this.resetTimer = this.resetTimer.bind(this);
+        this.pad = this.padTimer.bind(this)
+        document.getElementById("addtimer").onclick = this.createTimer.bind(this);
     }
-    createTimer(){
+    createTimer() {
         document.getElementById("timer").innerHTML = this.generateHTML()
         this.addEventHandlers()
     }
-    generateHTML(){
-        return   ` <div class="h1 p-5 mt-4 text-center bg-light rounded">
+    generateHTML() {
+        return ` <div class="h1 p-5 mt-4 text-center bg-light rounded">
         <span id="minutes">00</span> : <span id="seconds">00</span>: <span id="miliseconds">00</span>
       </div>
   
       <!-- timer buttons -->
-      <div class="container text-center">
-          <button class="btn btn-lg btn-success" id="start">
-            Start
-          </button>
-          <button class="btn btn-lg btn-danger" id="stop">
-            Stop
-          </button>
-        </div>
+      <div id="controls">
         <div class="container text-center">
-          <button class="btn btn-link btn-block" id="reset">
-            Reset
-          </button>
-          <button class="btn btn-lg btn-success" id="decrement">
-            Count down
-          </button>
+            <button class="btn btn-lg btn-success" data-action="start" id="start">
+                Count Up
+            </button>
+            </button>
+            <button class="btn btn-lg btn-success" data-action="decrease" id="decrement">
+                Count down
+            </button>
+            </div>
+            <div class="container text-center">
+            <button class="btn btn-link btn-block" data-action="reset" id="reset">
+                Reset
+                </button>
+                <button class="btn btn-lg btn-danger" data-action="stop" id="stop">
+                Stop
+            </button>
+            </div>
         </div>
       </div> `
     }
 
-    addEventHandlers()
-    {
+    addEventHandlers() {
         // Put the element on the page with an id of start in a variable
         // Do the same for the stop button and the reset button
-        const startBtn = document.getElementById("start");
-        const stopBtn = document.getElementById("stop");
-        const resetBtn = document.getElementById("reset");
-        const decrementBtn = document.getElementById("decrement");
+       
+        let controls = document.getElementById("controls");
+        controls.addEventListener("click", this);
+        
 
-        // Add an onclick handler to each of the buttons
-        // The functions startTimer, stopTimer and resetTimer should fire when one of the buttons is clicked
-        startBtn.onclick = this.startTimer.bind(this);
-        stopBtn.onclick = this.stopTimer.bind(this);
-        resetBtn.onclick = this.resetTimer.bind(this);
-        decrementBtn.onclick = this.decreaseTimer.bind(this);
+    }
+    handleEvent(e){
+        //deturmine if what btn the user pressed
+        let target = e.target;
+        let action = target.dataset.action;
+        let method = action + "Timer";
+        this[method]();
+
+       
+
     }
 
-
     startTimer() {
-        
-        if(this.isRunning == false){
+
+        if (this.isRunning == false) {
             this.isRunning = true;
             this.isIncementing = true;
             this.timer = setInterval(this.updateTimer, 10);
 
         }
     }
-    decreaseTimer(){
-        if(this.isRunning == false){
+    decreaseTimer() {
+        if (this.isRunning == false && this.elapsedTime > 0) {
             this.isRunning = true;
             this.isDecrementing = true;
             this.timer = setInterval(this.updateTimer, 10);
@@ -106,20 +111,21 @@ class Timer{
         }
     }
     updateTimer() {
-        if(this.isRunning && this.isIncementing){
-        const [minutes, seconds, milliseconds] = this.incrementTimer();
-        this.renderTimer(minutes, seconds, milliseconds);
+        //ensure that the proper count is beeing taken into account
+        if (this.isRunning && this.isIncementing) {
+            const [minutes, seconds, milliseconds] = this.incrementTimer();
+            this.renderTimer(minutes, seconds, milliseconds);
         }
-        else if (this.isRunning && this.isDecrementing){
+        else if (this.isRunning && this.isDecrementing) {
             const [minutes, seconds, milliseconds] = this.decrementTimer();
-        this.renderTimer(minutes, seconds, milliseconds);
-        } 
+            this.renderTimer(minutes, seconds, milliseconds);
+        }
     }
 
     incrementTimer() {
         // Increment the elapsedTime
         this.elapsedTime++;
-        
+
         // Calculate minutes, seconds, and milliseconds
         this.minutes = Math.floor(this.elapsedTime / 6000);
         this.seconds = Math.floor(this.elapsedTime / 100) % 60;
@@ -130,10 +136,10 @@ class Timer{
     decrementTimer() {
         // decrement the elapsedTime
         this.elapsedTime--;
-        if(this.elapsedTime == 0 ){
+        if (this.elapsedTime == 0) {
             this.stopTimer()
         }
-        
+
         // Calculate minutes, seconds, and milliseconds
         this.minutes = Math.floor(this.elapsedTime / 6000);
         this.seconds = Math.floor(this.elapsedTime / 100) % 60;
@@ -143,23 +149,23 @@ class Timer{
     }
 
 
-    renderTimer(minutes, seconds, miliseconds){
+    renderTimer(minutes, seconds, miliseconds) {
         //show the value of both on the webpage
         //this one being minutes
-        document.getElementById("minutes").innerHTML = this.pad(minutes);
+        document.getElementById("minutes").innerHTML = this.padTimer(minutes);
         //this one being seconds
-        document.getElementById("seconds").innerHTML = this.pad(seconds);
+        document.getElementById("seconds").innerHTML = this.padTimer(seconds);
         //this one for miliseconds
-        document.getElementById("miliseconds").innerHTML = this.pad(miliseconds);
+        document.getElementById("miliseconds").innerHTML = this.padTimer(miliseconds);
 
     }
 
 
 
 
-    pad(number) {
+    padTimer(number) {
         // add a leading 0 to number if the number is < 10
-        if(number < 10){
+        if (number < 10) {
             number = "0" + number;
 
         }
@@ -169,17 +175,17 @@ class Timer{
 
     stopTimer() {
         // if the timer is running, stop it by
-            // set isRunning to false
-            // call the function clearInterval to stop the timer
+        // set isRunning to false
+        // call the function clearInterval to stop the timer
         // end if
-        if (this.isRunning){
+        if (this.isRunning) {
             // set isRunning to false
             this.isRunning = false;
             this.isIncementing = false;
             this.isDecrementing = false;
             clearInterval(this.timer);
         }
-        
+
     }
 
     resetTimer() {
@@ -195,4 +201,4 @@ class Timer{
 }
 
 // When the page has finished loading, call the function init
-window.onload = () => {new Timer };
+window.onload = () => { new Timer };
