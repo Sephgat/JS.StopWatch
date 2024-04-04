@@ -22,9 +22,10 @@
     Initialize them to false, null and 0 respectively.
 */
 
-
 class Timer {
+    static methodsnames = ["start", "decrease", "reset", "stop"]
     constructor() {
+        
         this.isRunning = false;
         this.isIncementing = false;
         this.isDecrementing = false;
@@ -46,31 +47,45 @@ class Timer {
         this.addEventHandlers()
     }
     generateHTML() {
+        let HTML = this.generateHeader()
+        for(let i = 0; i < 2 ; i++) {
+            HTML += this.generateTimerBtn(Timer.methodsnames[i])
+        }
+        HTML += this.generatemiddle()
+        for(let i = 2; i < 4 ; i++) {
+            HTML += this.generateBtn(Timer.methodsnames[i])
+        }
+        HTML += this.generatefooter();
+        return HTML
+    }
+    generateHeader(){
         return ` <div class="h1 p-5 mt-4 text-center bg-light rounded">
         <span id="minutes">00</span> : <span id="seconds">00</span>: <span id="miliseconds">00</span>
       </div>
-  
-      <!-- timer buttons -->
       <div id="controls">
-        <div class="container text-center">
-            <button class="btn btn-lg btn-success" data-action="start" id="start">
-                Count Up
-            </button>
-            </button>
-            <button class="btn btn-lg btn-success" data-action="decrease" id="decrement">
-                Count down
-            </button>
-            </div>
-            <div class="container text-center">
-            <button class="btn btn-link btn-block" data-action="reset" id="reset">
-                Reset
-                </button>
-                <button class="btn btn-lg btn-danger" data-action="stop" id="stop">
-                Stop
-            </button>
-            </div>
+        <div class="container text-center">`
+    }
+    generateTimerBtn(mthd){
+        return ` 
+        <button class="btn btn-lg btn-success" data-action="${mthd}" id="controls">
+        ${mthd}
+        </button>`
+    }
+    generatemiddle(){
+        return `
         </div>
-      </div> `
+        <div class="container text-center">`
+    }
+    generateBtn(mthd){
+        return `
+        <button class="btn btn-lg btn-danger" data-action="${mthd}" id="controls">
+        ${mthd}
+        </button>`
+    }
+    generatefooter(){
+        return`
+            </div>
+        </div>`
     }
 
     addEventHandlers() {
