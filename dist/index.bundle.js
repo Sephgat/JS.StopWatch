@@ -1,8 +1,109 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./dev_modules/@ocdla/foobar/foobar.js":
+/*!*********************************************!*\
+  !*** ./dev_modules/@ocdla/foobar/foobar.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   decrementTimer: () => (/* binding */ decrementTimer),
+/* harmony export */   incrementTimer: () => (/* binding */ incrementTimer)
+/* harmony export */ });
+function incrementTimer() {
+  // Increment the elapsedTime
+  console.log("here");
+  /*
+  this.elapsedTime++;
+    // Calculate minutes, seconds, and milliseconds
+  this.minutes = Math.floor(this.elapsedTime / 6000);
+  this.seconds = Math.floor(this.elapsedTime / 100) % 60;
+  this.milliseconds = this.elapsedTime % 100;
+    return [this.minutes, this.seconds, this.milliseconds];*/
+}
+function decrementTimer() {
+  // decrement the elapsedTime
+  this.elapsedTime--;
+  if (this.elapsedTime == 0) {
+    this.stopTimer();
+  }
+
+  // Calculate minutes, seconds, and milliseconds
+  this.minutes = Math.floor(this.elapsedTime / 6000);
+  this.seconds = Math.floor(this.elapsedTime / 100) % 60;
+  this.milliseconds = this.elapsedTime % 100;
+  return [this.minutes, this.seconds, this.milliseconds];
+}
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!******************************!*\
   !*** ./src/js/indexStart.js ***!
   \******************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _dev_modules_ocdla_foobar_foobar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../dev_modules/@ocdla/foobar/foobar */ "./dev_modules/@ocdla/foobar/foobar.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -16,7 +117,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-// TxtFile from './@ocdla/TxtFile.
+
 var Timer = /*#__PURE__*/function () {
   function Timer() {
     _classCallCheck(this, Timer);
@@ -26,14 +127,15 @@ var Timer = /*#__PURE__*/function () {
     this.timer = null;
     this.elapsedTime = 0;
     this.createTimer = this.createTimer.bind(this);
-    this.incrementTimer = this.incrementTimer.bind(this);
+    //this.incrementTimer = this.incrementTimer.bind(this);
     this.startTimer = this.startTimer.bind(this);
-    this.decrementTimer = this.decrementTimer.bind(this);
+    //this.decrementTimer = this.decrementTimer.bind(this);
     this.updateTimer = this.updateTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
     this.pad = this.padTimer.bind(this);
     document.getElementById("addtimer").onclick = this.createTimer.bind(this);
+    _dev_modules_ocdla_foobar_foobar__WEBPACK_IMPORTED_MODULE_0__.incrementTimer();
   }
   return _createClass(Timer, [{
     key: "createTimer",
@@ -136,33 +238,29 @@ var Timer = /*#__PURE__*/function () {
         this.renderTimer(_minutes, _seconds, _milliseconds);
       }
     }
-  }, {
-    key: "incrementTimer",
-    value: function incrementTimer() {
-      // Increment the elapsedTime
-      this.elapsedTime++;
-
-      // Calculate minutes, seconds, and milliseconds
-      this.minutes = Math.floor(this.elapsedTime / 6000);
-      this.seconds = Math.floor(this.elapsedTime / 100) % 60;
-      this.milliseconds = this.elapsedTime % 100;
-      return [this.minutes, this.seconds, this.milliseconds];
+    /*
+    incrementTimer() {
+        // Increment the elapsedTime
+        this.elapsedTime++;
+          // Calculate minutes, seconds, and milliseconds
+        this.minutes = Math.floor(this.elapsedTime / 6000);
+        this.seconds = Math.floor(this.elapsedTime / 100) % 60;
+        this.milliseconds = this.elapsedTime % 100;
+          return [this.minutes, this.seconds, this.milliseconds];
     }
-  }, {
-    key: "decrementTimer",
-    value: function decrementTimer() {
-      // decrement the elapsedTime
-      this.elapsedTime--;
-      if (this.elapsedTime == 0) {
-        this.stopTimer();
-      }
-
-      // Calculate minutes, seconds, and milliseconds
-      this.minutes = Math.floor(this.elapsedTime / 6000);
-      this.seconds = Math.floor(this.elapsedTime / 100) % 60;
-      this.milliseconds = this.elapsedTime % 100;
-      return [this.minutes, this.seconds, this.milliseconds];
+    decrementTimer() {
+        // decrement the elapsedTime
+        this.elapsedTime--;
+        if (this.elapsedTime == 0) {
+            this.stopTimer()
+        }
+          // Calculate minutes, seconds, and milliseconds
+        this.minutes = Math.floor(this.elapsedTime / 6000);
+        this.seconds = Math.floor(this.elapsedTime / 100) % 60;
+        this.milliseconds = this.elapsedTime % 100;
+          return [this.minutes, this.seconds, this.milliseconds];
     }
+      */
   }, {
     key: "renderTimer",
     value: function renderTimer(minutes, seconds, miliseconds) {
@@ -217,6 +315,8 @@ _defineProperty(Timer, "methodsnames", ["start", "decrease", "reset", "stop"]);
 window.onload = function () {
   new Timer();
 };
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=index.bundle.js.map

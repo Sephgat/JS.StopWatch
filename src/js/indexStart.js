@@ -1,4 +1,4 @@
-// TxtFile from './@ocdla/TxtFile.
+import * as timer from '../../dev_modules/@ocdla/foobar/foobar';
 
 class Timer {
     static methodsnames = ["start", "decrease", "reset", "stop"]
@@ -11,14 +11,13 @@ class Timer {
         this.elapsedTime = 0;
 
         this.createTimer = this.createTimer.bind(this);
-        this.incrementTimer = this.incrementTimer.bind(this);
         this.startTimer = this.startTimer.bind(this);
-        this.decrementTimer = this.decrementTimer.bind(this);
         this.updateTimer = this.updateTimer.bind(this);
         this.stopTimer = this.stopTimer.bind(this);
         this.resetTimer = this.resetTimer.bind(this);
-        this.pad = this.padTimer.bind(this)
         document.getElementById("addtimer").onclick = this.createTimer.bind(this);
+        timer.incrementTimer()
+        
     }
     createTimer() {
         document.getElementById("timer").innerHTML = this.generateHTML()
@@ -106,65 +105,31 @@ class Timer {
     updateTimer() {
         //ensure that the proper count is beeing taken into account
         if (this.isRunning && this.isIncementing) {
-            const [minutes, seconds, milliseconds] = this.incrementTimer();
+            const [minutes, seconds, milliseconds, cTime] = timer.incrementTimer(this.elapsedTime);
+            this.elapsedTime = cTime;
             this.renderTimer(minutes, seconds, milliseconds);
         }
-        else if (this.isRunning && this.isDecrementing) {
-            const [minutes, seconds, milliseconds] = this.decrementTimer();
+        else if (this.isRunning && this.isDecrementing) {  
+            const [minutes, seconds, milliseconds, cTime] = timer.decrementTimer(this.elapsedTime);
+            this.elapsedTime = cTime;
             this.renderTimer(minutes, seconds, milliseconds);
+            if (this.elapsedTime == 0) {
+                this.stopTimer()
+            }    
         }
     }
-
-    incrementTimer() {
-        // Increment the elapsedTime
-        this.elapsedTime++;
-
-        // Calculate minutes, seconds, and milliseconds
-        this.minutes = Math.floor(this.elapsedTime / 6000);
-        this.seconds = Math.floor(this.elapsedTime / 100) % 60;
-        this.milliseconds = this.elapsedTime % 100;
-
-        return [this.minutes, this.seconds, this.milliseconds];
-    }
-    decrementTimer() {
-        // decrement the elapsedTime
-        this.elapsedTime--;
-        if (this.elapsedTime == 0) {
-            this.stopTimer()
-        }
-
-        // Calculate minutes, seconds, and milliseconds
-        this.minutes = Math.floor(this.elapsedTime / 6000);
-        this.seconds = Math.floor(this.elapsedTime / 100) % 60;
-        this.milliseconds = this.elapsedTime % 100;
-
-        return [this.minutes, this.seconds, this.milliseconds];
-    }
-
 
     renderTimer(minutes, seconds, miliseconds) {
         //show the value of both on the webpage
         //this one being minutes
-        document.getElementById("minutes").innerHTML = this.padTimer(minutes);
+        document.getElementById("minutes").innerHTML = timer.padTimer(minutes);
         //this one being seconds
-        document.getElementById("seconds").innerHTML = this.padTimer(seconds);
+        document.getElementById("seconds").innerHTML = timer.padTimer(seconds);
         //this one for miliseconds
-        document.getElementById("miliseconds").innerHTML = this.padTimer(miliseconds);
+        document.getElementById("miliseconds").innerHTML = timer.padTimer(miliseconds);
 
     }
 
-
-
-
-    padTimer(number) {
-        // add a leading 0 to number if the number is < 10
-        if (number < 10) {
-            number = "0" + number;
-
-        }
-        // return number
-        return number;
-    }
 
     stopTimer() {
         // if the timer is running, stop it by
