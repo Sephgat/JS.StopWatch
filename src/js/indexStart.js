@@ -1,26 +1,4 @@
-/*  Overview
-    This application simulates a simple stop watch on the page.  The user 
-    can start, stop or reset the clock using the buttons and link on the page.
-
-    There are 3 global variables that are used to keep track of the "state"
-    of the application.
-    -  isRunning - is a boolean that keeps track of whether the stopwatch is running or paused
-    -  elapsedTime - is an integer that represents number of seconds that the stopwatch has been running
-    -  timer - a reference to the code that fires at 1 second intervals that updates the clock
-
-    There are 3 functions that are associated with the click event handler for the buttons
-    and link on the page.  stopTimer, startTimer and resetTimer.
-
-    There are 3 "helper" functions
-    -   init is called when the page loads to set up the page
-    -   incrementTimer is called at one second intervals to update the page
-    -   pad is used to make sure that min or sec that are 1 digit can be displayed as 2
-        digits by adding a leading zero
-*/
-/*
-    Create 3 global variables, isRunning, timer and elapsedTime.
-    Initialize them to false, null and 0 respectively.
-*/
+// TxtFile from './@ocdla/TxtFile.
 
 class Timer {
     static methodsnames = ["start", "decrease", "reset", "stop"]
