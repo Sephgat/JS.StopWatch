@@ -1,7 +1,7 @@
 import * as timer from '../../dev_modules/@ocdla/foobar/foobar';
 
 class Timer {
-    static methodsnames = ["start", "decrease", "reset", "stop"]
+    static methodsnames = ["reset", "stop"]
     constructor() {
         
         this.isRunning = false;
@@ -9,35 +9,39 @@ class Timer {
         this.isDecrementing = false;
         this.timer = null;
         this.elapsedTime = 0;
-
+        
         this.createTimer = this.createTimer.bind(this);
         this.startTimer = this.startTimer.bind(this);
         this.updateTimer = this.updateTimer.bind(this);
-        this.stopTimer = this.stopTimer.bind(this);
+        //this.stopTimer = this.stopTimer.bind(this);
         this.resetTimer = this.resetTimer.bind(this);
         document.getElementById("addtimer").onclick = this.createTimer.bind(this);
-        timer.incrementTimer()
+      
         
     }
     createTimer() {
         document.getElementById("timer").innerHTML = this.generateHTML()
-        this.addEventHandlers()
+        this.addEventHandlers();
     }
     generateHTML() {
         let HTML = this.generateHeader()
-        for(let i = 0; i < 2 ; i++) {
+        HTML += this.generateTimerBtn("decrease")
+        HTML += this.generatefooter();
+        return HTML
+    }
+    generatetempHTML() {
+        let HTML = this.generateOgHTML()
+        for(let i = 0; i < 2; i++) {
             HTML += this.generateTimerBtn(Timer.methodsnames[i])
-        }
-        HTML += this.generatemiddle()
-        for(let i = 2; i < 4 ; i++) {
-            HTML += this.generateBtn(Timer.methodsnames[i])
         }
         HTML += this.generatefooter();
         return HTML
     }
     generateHeader(){
         return ` <div class="h1 p-5 mt-4 text-center bg-light rounded">
-        <span id="minutes">00</span> : <span id="seconds">00</span>: <span id="miliseconds">00</span>
+        <input type="number" id="minutes" value="0" style="width: 75px;"> : 
+        <input type="number" id="seconds" value="0" style="width: 75px;"> : 
+        <input type="number" id="milliseconds" value="0" style="width: 75px;">
       </div>
       <div id="controls">
         <div class="container text-center">`
@@ -48,16 +52,12 @@ class Timer {
         ${mthd}
         </button>`
     }
-    generatemiddle(){
-        return `
-        </div>
+    generateOgHTML(){
+        return ` <div class="h1 p-5 mt-4 text-center bg-light rounded">
+        <span id="minutes">00</span> : <span id="seconds">00</span>: <span id="milliseconds">00</span>
+      </div>
+      <div id="controls">
         <div class="container text-center">`
-    }
-    generateBtn(mthd){
-        return `
-        <button class="btn btn-lg btn-danger" data-action="${mthd}" id="controls">
-        ${mthd}
-        </button>`
     }
     generatefooter(){
         return`
@@ -95,26 +95,34 @@ class Timer {
         }
     }
     decreaseTimer() {
+        this.setTimer();
         if (this.isRunning == false && this.elapsedTime > 0) {
+            
             this.isRunning = true;
             this.isDecrementing = true;
             this.timer = setInterval(this.updateTimer, 10);
 
         }
     }
+    setTimer(){
+        let minutes = document.getElementById('minutes');
+        let seconds = document.getElementById('seconds');
+        let miliseconds = document.getElementById('milliseconds');
+        this.elapsedTime = timer.calcTimer(parseInt(minutes.value), parseInt(seconds.value), parseInt(miliseconds.value));
+
+        document.getElementById("timer").innerHTML = this.generatetempHTML()
+        this.addEventHandlers();
+        return;
+    }
     updateTimer() {
-        //ensure that the proper count is beeing taken into account
-        if (this.isRunning && this.isIncementing) {
-            const [minutes, seconds, milliseconds, cTime] = timer.incrementTimer(this.elapsedTime);
-            this.elapsedTime = cTime;
-            this.renderTimer(minutes, seconds, milliseconds);
-        }
-        else if (this.isRunning && this.isDecrementing) {  
+        
+        if (this.isRunning && this.isDecrementing) {  
             const [minutes, seconds, milliseconds, cTime] = timer.decrementTimer(this.elapsedTime);
             this.elapsedTime = cTime;
             this.renderTimer(minutes, seconds, milliseconds);
             if (this.elapsedTime == 0) {
                 this.stopTimer()
+                this.createTimer();
             }    
         }
     }
@@ -126,7 +134,7 @@ class Timer {
         //this one being seconds
         document.getElementById("seconds").innerHTML = timer.padTimer(seconds);
         //this one for miliseconds
-        document.getElementById("miliseconds").innerHTML = timer.padTimer(miliseconds);
+        document.getElementById("milliseconds").innerHTML = timer.padTimer(miliseconds);
 
     }
 
@@ -149,12 +157,8 @@ class Timer {
     resetTimer() {
         // stop the timer by calling stopTimer
         this.stopTimer();
-        // set the timerTime back to 0
-        this.elapsedTime = 0;
-        // write 00 to the elements on the page for minutes and seconds
-        document.getElementById("minutes").innerHTML = "00"
-        document.getElementById("seconds").innerHTML = "00"
-        document.getElementById("miliseconds").innerHTML = "00"
+        this.createTimer();
+        
     }
 }
 

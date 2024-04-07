@@ -1,4 +1,4 @@
- export function incrementTimer(elapsedTime) {
+ /*export function incrementTimer(elapsedTime) {
     // Increment the elapsedTime
     elapsedTime++;
 
@@ -8,7 +8,7 @@
     let milliseconds = elapsedTime % 100;
 
     return [minutes, seconds, milliseconds, elapsedTime];
-}
+}*/
 export function decrementTimer(elapsedTime) {
     // decrement the elapsedTime
     elapsedTime--;
@@ -29,4 +29,16 @@ export function padTimer(number) {
     }
     // return number
     return number;
+}
+export function calcTimer(minutes, seconds, miliseconds){
+    //return number of total nanosecends
+    let totalMilliseconds = 0;
+    if (!isNaN(minutes)){
+    totalMilliseconds += (minutes * 60) * 100}
+    if (!isNaN(seconds))
+    totalMilliseconds += seconds * 100
+    if(!isNaN(miliseconds))
+    totalMilliseconds += miliseconds
+    //+ (seconds * 1000) + milliseconds;
+    return totalMilliseconds;
 }
