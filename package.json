@@ -19,6 +19,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "babel-loader": "^8.2.5"
+    "babel-loader": "^8.2.5",
+    "Timer" : "file: ./dev_modules/@ocdla/Timer/Timer"
   }
 }

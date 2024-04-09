@@ -54,6 +54,12 @@ module.exports = {
         inject: "body",
         filename: "index.html",
       }),
+      new htmlWebpackPlugin({
+        template: path.resolve(__dirname, "./src/indexStart.js"),
+        chunks: ["indexStart"],
+        inject: "body",
+        filename: "indexStart.js",
+      }),
     ],
 }
   
