@@ -1,7 +1,10 @@
+/** @jsx vNode */
 // Note this class actually works:
 // let cd = new Timer(10);
 // cd.start();
 // cd.stop();
+import {vNode, View} from "@ocdla/view"
+import {TimerComponent} from './timerHTML.js';
 
 class Timer {
 
@@ -43,7 +46,7 @@ class Timer {
             const seconds = this.g.next().value;
             if (seconds === undefined) {
                 clearInterval(this.interval);
-                document.getElementById("Timer").innerHTML = Timer.TIMER_FINISHED_SOUND;
+                document.getElementById("timer").innerHTML = Timer.TIMER_FINISHED_SOUND;
                 // this.rener(0);
             } else {
                 //console.log(seconds);
@@ -67,23 +70,23 @@ class Timer {
 
         [h, m, s] = Timer.parse(seconds); // Parse seconds into hour,min,sec *string notation.
 
-        let time = `${h}hrs : ${m}mins : ${s}secs`;
+        //let time = `${h}hrs : ${m}mins : ${s}secs`;
         //console.log(time);
-        document.getElementById("Timer").innerHTML = time;
+        let html = View.createElement(<TimerComponent hours={h} minutes={m} seconds={s}/>);
+        console.log(html);
+        document.getElementById("timer").appendChild(html)
+        let temp = document.getElementById("child")
+        document.getElementById("timer").replaceChild(html,temp);
 
-        return [h, m, s];
+        
         // Use JSX syntax.
         // For Week 2
         /*
-        return (
-            <div class="timer">
-                <span class="hours">{h}</span>
-                <span class="minutes">{m}</span>
-                <span class="seconds">{s}</span>
-            </div>
-        );
+        return
         */
     }
+
+
     static convertTimer(sec) {
         let hours = Math.floor(sec / 3600);
         let minutes = Math.floor((sec % 3600) / 60);
@@ -122,6 +125,8 @@ class Timer {
     }
    
 }
+
+
 
 export default Timer;
 
