@@ -1,9 +1,9 @@
 {
-    "name": "@ocdla/html",
+    "name": "@ocdla/timer",
     "version": "0.1.0",
     "description": "Create text files; add content and headings to text files.",
     "type": "module",
-    "browser": "index.js",
+    "browser": "timer.js",
     "scripts": {
       "build": "babel src -d dist"
     },

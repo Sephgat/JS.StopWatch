@@ -5,7 +5,8 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
     mode: 'development',
     entry: {
-      index: './src/js/indexStart.js',
+      index: './src/js/index.js',
+      Timer: './dev_modules/@ocdla/timer/timer.js'
     },
     output: {
       path: path.resolve(__dirname, "dist"),
@@ -26,7 +27,7 @@ module.exports = {
           use: { 
             loader: 'babel-loader', 
             options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env', "@babel/preset-react"]
           }}
         }, 
         { 
@@ -49,17 +50,12 @@ module.exports = {
     },
     plugins: [
       new htmlWebpackPlugin({
-        template: path.resolve(__dirname, "./src/indexStart.html"),
+        template: path.resolve(__dirname, "./src/index.html"),
         chunks: ["index"],
         inject: "body",
         filename: "index.html",
       }),
-      new htmlWebpackPlugin({
-        template: path.resolve(__dirname, "./src/indexStart.js"),
-        chunks: ["indexStart"],
-        inject: "body",
-        filename: "indexStart.js",
-      }),
+      
     ],
 }
   
