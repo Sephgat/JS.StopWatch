@@ -1,6 +1,6 @@
 /** @jsx vNode */
-import Timer from '../../dev_modules/@ocdla/timer/timer.js';
-import * as TimerHtml from '../../dev_modules/@ocdla/timer/timerHTML.js';
+import Timer from '../../dev_modules/@ocdla/timer/timerObject.js';
+import * as TimerHtml from '../../dev_modules/@ocdla/timer/timerPageHTML.js';
 
  
 
@@ -9,7 +9,7 @@ let timer;
 const methodsnames = ["reset", "stop"];
 
 function createTimer() {
-    document.getElementById("timer").innerHTML = generateHTML();
+    document.getElementById("html").innerHTML = generateHTML();
     addEventHandlers();
 }
 function generateHTML() {
@@ -70,7 +70,7 @@ function setTimer(){
 
   
     timer.start();
-    document.getElementById("timer").innerHTML = generateInitialHTML();
+    document.getElementById("html").innerHTML = generateInitialHTML();
     addEventHandlers();
   
 }

@@ -22,6 +22,6 @@
   },
   "dependencies": {
     "babel-loader": "^8.2.5",
-    "@ocdla/timer" : "file: ./dev_modules/@ocdla/timer/timer"
+    "@ocdla/timer" : "file: ./dev_modules/@ocdla/timer/timerObject"
   }
 }
