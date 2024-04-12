@@ -1,76 +1,40 @@
-/** @jsx vNode */
-import Timer from '../../dev_modules/@ocdla/timer/timerObject.js';
-import * as TimerHtml from '../../dev_modules/@ocdla/timer/timerPageHTML.js';
-
- 
-
-createTimer();
-let timer;
-const methodsnames = ["reset", "stop"];
-
-function createTimer() {
-    document.getElementById("html").innerHTML = generateHTML();
-    addEventHandlers();
-}
-function generateHTML() {
-    let HTML = TimerHtml.generateHeader()
-    HTML += TimerHtml.generateTimerBtn("start");
-    HTML += TimerHtml.generatefooter();
-    return HTML;
-}
-function generateInitialHTML() {
-    let HTML = TimerHtml.generateCountDownHTML();
-    for(let i = 0; i < methodsnames.length; i++) {
-        HTML += TimerHtml.generateTimerBtn(methodsnames[i]);
-    }
-    HTML += TimerHtml.generatefooter();
-    return HTML;
-}
+import Controller from "./controller.js"
 
 
 function addEventHandlers() {
     // Put the element on the page with an id of start in a variable
     // Do the same for the stop button and the reset button
-   
+
     let controls = document.getElementById("controls");
     controls.addEventListener("click", handleEvent);
-    
+
 
 }
-function handleEvent(e){
+
+function init(){
+    Controller.createTimer();
+    addEventHandlers();
+}
+
+function handleEvent(e) {
     //deturmine if what btn the user pressed
     let target = e.target;
     let action = target.dataset.action;
     //let method = action + "Timer";
-    if (action == "start"){
-        startTimer();
+    //this[method]()
+    if (action == "start") {
+        Controller.startTimer();
+        addEventHandlers();
     }
-    if (action == "stop"){
-        timer.stop();
+    if (action == "stop") {
+        Controller.stopTimer();
+        addEventHandlers();
     }
-    if (action == "reset"){
-        timer.stop();
-        resetTimer();
+    if (action == "reset") {
+        //timer.stop();
+        Controller.resetTimer();
+        addEventHandlers();
     }
-}
-function resetTimer(){
-    createTimer(); 
-}
-function startTimer() {
-    setTimer();
-   
-}
-function setTimer(){
-    let hours = document.getElementById('hours');
-    let minutes = document.getElementById('minutes');
-    let seconds = document.getElementById('seconds');
-    let cal = Timer.calcTimer(parseInt(hours.value), parseInt(minutes.value), parseInt(seconds.value));
     
-    timer = new Timer(cal);
-
-  
-    timer.start();
-    document.getElementById("html").innerHTML = generateInitialHTML();
-    addEventHandlers();
-  
 }
+init();
