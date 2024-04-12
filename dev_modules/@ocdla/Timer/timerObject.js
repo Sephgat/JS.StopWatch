@@ -49,9 +49,9 @@ class Timer {
                 clearInterval(this.interval);
                 let html = View.createElement(<TimerFinishedComponent/>)
 
-                document.getElementById("timer").appendChild(html)
-                let temp = document.getElementById("child")
-                document.getElementById("timer").replaceChild(html,temp);
+                //document.getElementById("timer").appendChild(html)
+                let temp = document.getElementById("timer")
+                document.getElementById("html").replaceChild(html,temp);
 
             } else {
                 //console.log(seconds);
@@ -77,10 +77,9 @@ class Timer {
 
         
         let html = View.createElement(<TimerComponent hours={h} minutes={m} seconds={s}/>);
-        console.log(html);
-        document.getElementById("timer").appendChild(html)
-        let temp = document.getElementById("child")
-        document.getElementById("timer").replaceChild(html,temp);
+        
+        let temp = document.getElementById("timer")
+        document.getElementById("html").replaceChild(html,temp);
 
     }
 
