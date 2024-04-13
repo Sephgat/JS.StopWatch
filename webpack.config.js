@@ -9,6 +9,11 @@ module.exports = {
       timer: './node_modules/@ocdla/timer/Timer.js',
       timercomponent: './node_modules/@ocdla/timer/TimerComponent.js',
     },
+    resolve: {
+      alias: {
+        View: path.resolve(__dirname, 'node_modules/@ocdla/view'),
+      }
+    },
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: '[name].bundle.js',
