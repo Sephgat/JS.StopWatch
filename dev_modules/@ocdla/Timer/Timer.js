@@ -1,11 +1,5 @@
 /** @jsx vNode */
-// Note this class actually works:
-// let cd = new Timer(10);
-// cd.start();
-// cd.stop();
-import {vNode, View} from "../../../node_modules/@ocdla/view/view.js";
-import {TimerComponent} from './TimerComponent.js';
-//import {TimerFinishedComponent} from './timerPageHTML.js';
+
 
 class Timer {
 
