@@ -24,11 +24,7 @@ export const TimerComponent = function(props) {
             <div id="controls">
                 <div class="container text-center">
                     <Button action="start" id="start" label="start"/>
-                </div>
-                <div class="container text-center">
                     <Button action="stop" id="stop" label="stop"/>
-                </div>
-                <div class="container text-center">
                     <Button action="reset" id="reset" label="reset"/>
                 </div>
             </div>
