@@ -6,7 +6,8 @@ module.exports = {
     mode: 'development',
     entry: {
       index: './src/js/index.js',
-      Timer: './dev_modules/@ocdla/timer/timerObject.js'
+      timer: './node_modules/@ocdla/timer/Timer.js',
+      timercomponent: './node_modules/@ocdla/timer/TimerComponent.js',
     },
     output: {
       path: path.resolve(__dirname, "dist"),
