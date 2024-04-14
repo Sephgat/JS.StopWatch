@@ -1,11 +1,11 @@
 /** @jsx vNode */
 
 
-import {vNode, View} from "View/view.js";
+import {vNode, View} from "../view/view.js";
 
 
 
-
+/** @jsx vNode */
 
 
 export const TimerComponent = function(props) {

@@ -10,9 +10,7 @@ module.exports = {
       timercomponent: './node_modules/@ocdla/timer/TimerComponent.js',
     },
     resolve: {
-      alias: {
-        View: path.resolve(__dirname, 'node_modules/@ocdla/view'),
-      }
+      symlinks: false,
     },
     output: {
       path: path.resolve(__dirname, "dist"),
@@ -28,8 +26,7 @@ module.exports = {
     module: {
       rules: [	
         { 
-          test: /\.js$/i,
-          exclude: /(node_modules)/,
+          test: /\.(js|jsx)$/,
           use: { 
             loader: 'babel-loader', 
             options: {
