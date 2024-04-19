@@ -14,6 +14,7 @@
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-react": "^7.24.1",
     "@ocdla/timer": "file:./dev_modules/@ocdla/timer",
+    "@ocdla/salesforceapi": "file:./dev_modules/@ocdla/salesforceapi",
     "@ocdla/view": "~2.3.0",
     "babel-loader": "^9.1.3",
     "copy-webpack-plugin": "^11.0.0",
@@ -24,6 +25,7 @@
   },
   "dependencies": {
     "@ocdla/timer": "file:./dev_modules/@ocdla/timer",
+    "@ocdla/salesforceapi": "file:./dev_modules/@ocdla/salesforceapi",
     "@ocdla/view": "~2.3.0"
   }
 }
