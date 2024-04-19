@@ -2,6 +2,8 @@
 import { vNode, View } from "../../node_modules/@ocdla/view/view.js";
 import { TimerComponent } from '../../node_modules/@ocdla/timer/TimerComponent.js';
 import Timer from '../../node_modules/@ocdla/timer/Timer.js';
+import Api from '../../node_modules/@ocdla/salesforceapi/salesforceapi.js'
+
 
 
 //responable for createing action on the page
@@ -14,9 +16,26 @@ class Controller {
 
         let html = View.createElement(<TimerComponent hours="0" minutes="00" seconds="00" />);
         document.getElementById("html").appendChild(html);
-
+        Controller.getapi();
 
     }
+
+
+    static async getapi(){
+        const api = new Api();
+        let a = await api.fetchTimer();
+        console.log(a[0].Name);
+        let html = Controller.savedTimer(a[0]);
+        document.getElementById("saved").innerHTML = html;
+    }
+    static savedTimer(a){
+        return `
+        <div class=text-center bg-light rounded>
+        ${a.Name}: <div class="savedhours"> ${a.hours__c} hours<div/> <div class="savedmin"> ${a.minutes__c} minutes<div/> <div id="savedsec"> ${a.seconds__c} seconds<div/>
+        </div>`
+    }
+
+
     static startTimer() {
         let hours = document.getElementById('hours');
         let minutes = document.getElementById('minutes');
