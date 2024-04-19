@@ -1,6 +1,6 @@
 {
     "name": "@ocdla/timer",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "Create text files; add content and headings to text files.",
     "type": "module",
     "browser": "timer.js",

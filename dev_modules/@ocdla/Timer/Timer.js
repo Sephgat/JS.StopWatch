@@ -8,6 +8,7 @@ class Timer {
 
     // Window.setInterval or Node global.setInterval.
     interval;
+    callbacks = [];
 
     // Specify precision in milliseconds.
     // Defaults to 1 second.
@@ -23,6 +24,7 @@ class Timer {
         // let seconds = TimeString.seconds(timestring); Imagine passing in "5m 30s"; would need to be converted to seconds.
         let seconds = timestringOrSeconds;
         this.g = this.counter(seconds);
+        this.callbacks = [];
     }
 
 
@@ -60,21 +62,22 @@ class Timer {
 
     tick(seconds) {
 
-        let h, m, s;
 
-        [h, m, s] = Timer.parse(seconds); // Parse seconds into hour,min,sec *string notation.
-
-        this.onTicks[0](h,m,s);
-        
+        let [h, m, s] = Timer.parse(seconds); // Parse seconds into hour,min,sec *string notation.
+        for (let i = 0; i < this.onTicks.length; i++){
+            this.callbacks[0](h,m,s);
+        }
 
     }
     onTick(fn){
+        this.callbacks.push(fn);
         this.onTicks = [fn];
+
 
     }
 
     static convertTimer(sec) {
-        let hours = Math.floor(sec / 3600);
+        let hours = Math.floor(sec / 3600); 
         let minutes = Math.floor((sec % 3600) / 60);
         let seconds = Math.floor(sec % 60)
 
