@@ -8,6 +8,7 @@ module.exports = {
       index: './src/js/index.js',
       timer: './node_modules/@ocdla/timer/Timer.js',
       timercomponent: './node_modules/@ocdla/timer/TimerComponent.js',
+      salesforceapi: './node_modules/@ocdla/salesforceapi/salesforceapi.js',
     },
     resolve: {
       symlinks: false,
