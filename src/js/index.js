@@ -3,7 +3,7 @@ import Controller from "./Controller.js"
 
 
 let controller = new Controller();
-Controller.addEventHandlers();
+controller.addEventHandlers();
 
 
 
