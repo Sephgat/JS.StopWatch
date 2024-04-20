@@ -5,9 +5,6 @@ import {vNode, View} from "../view/view.js";
 
 
 
-/** @jsx vNode */
-
-
 export const TimerComponent = function(props) {
 
     let h = props.hours.toString();
@@ -31,13 +28,7 @@ export const TimerComponent = function(props) {
         </div>
     );
 };
-/*export const TimerFinishedComponent = function(props) {
-    return (
-        <div class="h1 p-5 mt-4  text-center bg-light rounded" id="timer">
-            <p>Beep!</p>
-        </div>
-    );
-};*/
+
 const Button = function(props) {
 
     // convert string of keys to an array of characters.
