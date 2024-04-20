@@ -30,7 +30,7 @@ class Timer {
 
     // Generator function that returns a number each time its next() method is called.
     * counter(units) {
-        for (let i = units; i >= 0; i--) {
+        for (let i = units - 1; i >= 0; i--) {
             yield i;
         }
     }
@@ -64,16 +64,13 @@ class Timer {
 
 
         let [h, m, s] = Timer.parse(seconds); // Parse seconds into hour,min,sec *string notation.
-        for (let i = 0; i < this.onTicks.length; i++){
-            this.callbacks[0](h,m,s);
+        for (let i = 0; i < this.callbacks.length; i++){
+            this.callbacks[i](h,m,s);
         }
 
     }
     onTick(fn){
         this.callbacks.push(fn);
-        this.onTicks = [fn];
-
-
     }
 
     static convertTimer(sec) {
@@ -102,7 +99,7 @@ class Timer {
         }
         return [hr, min, sec]; // For example to display 01:25:05
     }
-    static calcTimer(hours, minutes, seconds){
+    static toSeconds(hours, minutes, seconds){
         let totalSeconds = 0;
         if (!isNaN(hours))
         totalSeconds = totalSeconds + (hours * 3600);
