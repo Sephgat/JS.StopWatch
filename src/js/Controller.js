@@ -1,8 +1,9 @@
 /** @jsx vNode */
 import { vNode, View } from "../../node_modules/@ocdla/view/view.js";
 import { TimerComponent } from '../../node_modules/@ocdla/timer/TimerComponent.js';
+import { APIComponent } from '../../node_modules/@ocdla/salesforceapi/APIComponent.js';
 import Timer from '../../node_modules/@ocdla/timer/Timer.js';
-import Api from '../../node_modules/@ocdla/salesforceapi/salesforceapi.js'
+import Api from '../../node_modules/@ocdla/salesforceapi/salesforceapi.js';
 
 
 
@@ -17,7 +18,7 @@ class Controller {
 
         this.clock = View.createRoot("#html");
         this.clock.render(<TimerComponent hours="0" minutes="00" seconds="00" />);
-        //this.getapi();
+        this.getapi();
 
 
     }
@@ -26,16 +27,12 @@ class Controller {
     async getapi() {
         const api = new Api();
         let a = await api.query();
-        console.log(a[0].Name);
-        let html = this.savedTimer(a[0]);
-        document.getElementById("saved").innerHTML = html;
+        for(let i = 0; i < a.length; i++){
+        let html = View.createElement(<APIComponent hours={a[i].hours__c} minutes={a[i].minutes__c} seconds={a[i].seconds__c}/>);
+        document.getElementById("html").appendChild(html);
+        }
     }
-    savedTimer(a) {
-        return `
-        <div class=text-center bg-light rounded>
-        ${a.Name}: <div class="savedhours"> ${a.hours__c} hours<div/> <div class="savedmin"> ${a.minutes__c} minutes<div/> <div id="savedsec"> ${a.seconds__c} seconds<div/>
-        </div>`
-    }
+
 
     getUserInput(id){
         let elem = document.getElementById(id);
