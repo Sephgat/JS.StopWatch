@@ -1,13 +1,24 @@
 /** @jsx vNode */
 
-
+/**
+ * Represents a Timer with countdown functionality.
+ */
 class Timer {
-
-    // The generator used to display units (usually seconds) for this timer.
+    /**
+    The generator used to display units (usually seconds) for this timer.
+    */
     g;
 
-    // Window.setInterval or Node global.setInterval.
+    /**
+     * Rederce to the interval used for timer updates
+     * @type {number}
+     */
     interval;
+
+
+    /**
+     * Array to store csllback functions
+     */
     callbacks = [];
 
     // Specify precision in milliseconds.
@@ -16,7 +27,7 @@ class Timer {
 
     // What sounds does the timer make when done?
     static TIMER_FINISHED_SOUND = 'BEEP!';
-    
+
     // Instantiate a Timer; initialize its generator.
     // For more information see:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators
@@ -36,14 +47,16 @@ class Timer {
     }
 
 
-    // Start this timer.
+    /**
+    * Start the timer and trigger tick function at specified intervals.
+    */
     start() {
 
         this.interval = setInterval(() => {
             const seconds = this.g.next().value;
             if (seconds === undefined) {
                 clearInterval(this.interval);
-                
+
             } else {
                 //console.log(seconds);
                 return this.tick(seconds)
@@ -53,34 +66,52 @@ class Timer {
     }
 
 
-    // Stop this timer.
+    /**
+    * Stop the timer.
+    */
     stop() {
         clearInterval(this.interval);
         // this.render(0);
     }
 
-
+    /**
+     * Execute callback functions with the current time values.
+     * @param {number} seconds - The remaining seconds on the timer.
+     */
     tick(seconds) {
 
 
         let [h, m, s] = Timer.parse(seconds); // Parse seconds into hour,min,sec *string notation.
-        for (let i = 0; i < this.callbacks.length; i++){
-            this.callbacks[i](h,m,s);
+        for (let i = 0; i < this.callbacks.length; i++) {
+            this.callbacks[i](h, m, s);
         }
 
     }
-    onTick(fn){
+    /**
+     * Register a callback function to be executed on each tick.
+     * @param {function} fn  - The callback function to be executed.
+     */
+    onTick(fn) {
         this.callbacks.push(fn);
     }
-
+     /**
+     * Convert total seconds into hours, minutes, and seconds.
+     * @param {number} sec - The total seconds to convert.
+     * @returns {number[]} - An array containing hours, minutes, and seconds.
+     */
     static convertTimer(sec) {
-        let hours = Math.floor(sec / 3600); 
+        let hours = Math.floor(sec / 3600);
         let minutes = Math.floor((sec % 3600) / 60);
         let seconds = Math.floor(sec % 60)
 
         return [hours, minutes, seconds];
 
     }
+    /**
+    * Pad a number with a leading zero if it is less than 10.
+    * @param {number} number - The number to pad.
+    * @returns {string} - The padded number as a string.
+    */
     static padTimer(number) {
         if (number < 10) {
             number = "0" + number;
@@ -89,6 +120,12 @@ class Timer {
         return number;
     }
 
+    /**
+    * Parse total seconds into hours, minutes, and seconds.
+    * @param {number} seconds - The total seconds to parse.
+    * @param {boolean} pad - Whether to pad the values with zeros.
+    * @returns {string[]} - An array containing hour, minute, and second strings.
+    */
     static parse(seconds, pad = true) {
 
         let [hr, min, sec] = Timer.convertTimer(seconds)
@@ -99,18 +136,25 @@ class Timer {
         }
         return [hr, min, sec]; // For example to display 01:25:05
     }
-    static toSeconds(hours, minutes, seconds){
+    /**
+    * Convert hours, minutes, and seconds into total seconds.
+    * @param {number} hours - The hours component.
+    * @param {number} minutes - The minutes component.
+    * @param {number} seconds - The seconds component.
+    * @returns {number} - The total seconds equivalent.
+    */
+    static toSeconds(hours, minutes, seconds) {
         let totalSeconds = 0;
         if (!isNaN(hours))
-        totalSeconds = totalSeconds + (hours * 3600);
+            totalSeconds = totalSeconds + (hours * 3600);
         if (!isNaN(minutes))
-        totalSeconds = totalSeconds + (minutes * 60);
-        if(!isNaN(seconds))
-        totalSeconds =  totalSeconds + seconds;
-        
+            totalSeconds = totalSeconds + (minutes * 60);
+        if (!isNaN(seconds))
+            totalSeconds = totalSeconds + seconds;
+
         return totalSeconds;
     }
-   
+
 }
 
 
