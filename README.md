@@ -24,9 +24,9 @@ and the program will initiate a countdown based on the provided time input.
 
 ## Documentation
 ### Controller Class
- [Controller Links](Controller.md)
+ [Controller Link](./src/js/README.md)
 
 
 
 ### Timer Class
-[Timer Links](Timer.md)
+[Timer Link](./dev_modules/@ocdla/timer/README.md)
