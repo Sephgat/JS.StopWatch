@@ -29,4 +29,4 @@ and the program will initiate a countdown based on the provided time input.
 
 
 ### Timer Class
-[Timer Link](./dev_modules/@ocdla/timer/README.md)
+[Timer Link](./dev_modules/@ocdla/Timer/README.md)
