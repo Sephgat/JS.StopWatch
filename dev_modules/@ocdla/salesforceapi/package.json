@@ -1,6 +1,6 @@
 {
     "name": "@ocdla/salesforceapi",
-    "version": "0.1.0",
+    "version": "0.3.0",
     "description": "a library to interface with sales force",
     "type": "module",
     "browser": "timer.js",

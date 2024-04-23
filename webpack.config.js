@@ -9,7 +9,7 @@ module.exports = {
       timer: './node_modules/@ocdla/timer/Timer.js',
       timercomponent: './node_modules/@ocdla/timer/TimerComponent.js',
       salesforceapi: './node_modules/@ocdla/salesforceapi/salesforceapi.js',
-      salesforceapi: './node_modules/@ocdla/salesforceapi/APIComponent.js',
+      salesforceapi: './node_modules/@ocdla/timer/APIComponent.js',
     },
     resolve: {
       symlinks: false,
