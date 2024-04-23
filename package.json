@@ -26,6 +26,6 @@
   "dependencies": {
     "@ocdla/timer": "file:./dev_modules/@ocdla/timer",
     "@ocdla/salesforceapi": "file:./dev_modules/@ocdla/salesforceapi",
-    "@ocdla/view": "~2.3.1"
+    "@ocdla/view": "~2.3.2"
   }
 }
