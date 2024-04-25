@@ -20,7 +20,7 @@ and the program will initiate a countdown based on the provided time input.
 * press "reset" to enter in a new time
 * press start again start the timer again
 # Pics
-![Picture of the timer Rendering](screenshots/example2.png)
+![Picture of the timer Rendering](screenshots/exampleTimer.png)
 
 ## Documentation
 ### Controller Class
