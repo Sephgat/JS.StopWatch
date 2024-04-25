@@ -21,9 +21,14 @@ export const TimerComponent = function (props) {
                 <input type="number" id="seconds" value={s} style="margin: 5px; width: 75px;" />
             </div>
 
-            <Button action="start" id="start" class="p-15" label="start" />
-            <Button action="stop" id="stop" class="p-15" label="stop" />
-            <Button action="reset" id="reset" class="m-5" label="reset" />
+
+
+            <Button action="start" id="start" label="start" />
+
+            <Button action="stop" id="stop" label="stop" />
+
+            <Button action="reset" id="reset" label="reset" />
+
         </div>
     );
 };
@@ -33,7 +38,7 @@ const Button = function (props) {
     // convert string of keys to an array of characters.
 
     return (
-        <button class="btn btn-lg btn-success" data-action={props.action} id={props.id}>{props.label}</button>
+        <button class="btn btn-lg btn-success"  style="margin: 5px;" data-action={props.action} id={props.id}>{props.label}</button>
     );
 
 };
