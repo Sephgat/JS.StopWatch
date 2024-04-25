@@ -13,10 +13,11 @@
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-react": "^7.24.1",
-    "@ocdla/timer": "file:./dev_modules/@ocdla/timer",
     "@ocdla/salesforceapi": "file:./dev_modules/@ocdla/salesforceapi",
+    "@ocdla/timer": "file:./dev_modules/@ocdla/timer",
     "@ocdla/view": "~2.3.0",
     "babel-loader": "^9.1.3",
+    "dotenv": "^16.4.5",
     "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.0",
     "webpack": "^5.74.0",
@@ -24,8 +25,9 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "@ocdla/timer": "file:./dev_modules/@ocdla/timer",
     "@ocdla/salesforceapi": "file:./dev_modules/@ocdla/salesforceapi",
+    "@ocdla/salesforcerestapi": "^0.2.0",
+    "@ocdla/timer": "file:./dev_modules/@ocdla/timer",
     "@ocdla/view": "~2.3.2"
   }
 }
