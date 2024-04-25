@@ -3,7 +3,7 @@ import { vNode, View } from "../../node_modules/@ocdla/view/view.js";
 import { TimerComponent } from '../../node_modules/@ocdla/timer/TimerComponent.js';
 import { APIComponent } from '../../node_modules/@ocdla/timer/APIComponent.js';
 import Timer from '../../node_modules/@ocdla/timer/Timer.js';
-import Api from '../../node_modules/@ocdla/salesforceapi/salesforceapi.js';
+import Api from '../../node_modules/@ocdla/salesforcerestapi/SalesforceRestApi.js';
 
 
 
@@ -17,10 +17,10 @@ class Controller {
     clock;
     constructor() {
 
-         /**
-         * Root element where the clock is displayed.
-         * @type {Element}
-         */
+        /**
+        * Root element where the clock is displayed.
+        * @type {Element}
+        */
         this.clock = View.createRoot("#html");
         /**
          * Api instance used to fetch data
@@ -28,7 +28,7 @@ class Controller {
          */
         this.api = new Api();
         // Render the timer
-        this.clock.render(<TimerComponent hours="0" minutes="00" seconds="00" />);
+        this.clock.render(<TimerComponent hours="00" minutes="00" seconds="00" />);
 
         // Fetch data from API
         this.getapi();
@@ -41,20 +41,24 @@ class Controller {
      * @async
      */
     async getapi() {
-        let a = await this.api.query();
-        for(let i = 0; i < a.length; i++){
-        let html = View.createElement(<APIComponent hours={a[i].hours__c} minutes={a[i].minutes__c} seconds={a[i].seconds__c}/>);
-        document.getElementById("html").appendChild(html);
+        let request = await this.api.read("query?q=SELECT+name,id,hours__c,minutes__c,seconds__c from SavedTimer__c");
+        let records = request.records
+        for (let i = 0; i < records.length; i++) {
+            let html = View.createElement(<APIComponent hours={records[i].hours__c} minutes={records[i].minutes__c} seconds={records[i].seconds__c} />);
+            document.getElementById("html").appendChild(html);
         }
     }
-    
+    async deleteapi(){
+        
+    }
 
-     /**
-     * Get user input from an input element by ID.
-     * @param {string} id - The ID of the input element.
-     * @returns {number} - The parsed integer value of the input element.
-     */
-    getUserInput(id){
+
+    /**
+    * Get user input from an input element by ID.
+    * @param {string} id - The ID of the input element.
+    * @returns {number} - The parsed integer value of the input element.
+    */
+    getUserInput(id) {
         let elem = document.getElementById(id);
         return parseInt(elem.value);
     }
@@ -68,19 +72,19 @@ class Controller {
         let minutesInput = this.getUserInput('minutes');
         let secondsInput = this.getUserInput('seconds');
         let savedtime = {
-            "Name":"attempt",
+            "Name": "attempt",
             "hours__c": hoursInput,
             "minutes__c": minutesInput,
             "seconds__c": secondsInput
         }
-        this.api.Post(savedtime)
+        this.api.create("SavedTimer__c",savedtime)
 
 
-        let numSeconds = Timer.toSeconds(hoursInput,minutesInput,secondsInput);
+        let numSeconds = Timer.toSeconds(hoursInput, minutesInput, secondsInput);
 
         this.timer = new Timer(numSeconds);
 
-        
+
         this.timer.onTick((h, m, s) => {
             this.clock.update(<TimerComponent hours={h} minutes={m} seconds={s} />);
         });
